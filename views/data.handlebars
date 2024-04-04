@@ -1,0 +1,21 @@
+{{#if isManager}}
+<a href="/register">Create Employee</a>
+{{/if}}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Technician</th>
+    <th>Comment</th>
+  </tr>
+{{#each products as |product| }}
+  <tr>
+    <td>{{product.name}}</td>
+    <td>{{product.location}}</td>
+    <td>{{product.user.name}}</td>
+    <td>{{#each product.comments as |comment|}}
+    <p>{{comment.text}}</p>
+    {{/each}}</td>
+  </tr>
+{{/each}}
+</table>

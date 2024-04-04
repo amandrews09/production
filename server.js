@@ -18,6 +18,12 @@ const sess = {
     db: sequelize,
   }),
 };
+// Define a function to set MIME types
+function setCustomHeaders(res, path) {
+  if (path.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+  }
+}
 app.use(session(sess));
 // Middleware to set currentUser
 app.use((req, res, next) => {
@@ -31,12 +37,8 @@ app.use((req, res, next) => {
   }
   next();
 });
-// Define a function to set MIME types
-function setCustomHeaders(res, path) {
-  if (path.endsWith('.js')) {
-    res.setHeader('Content-Type', 'application/javascript');
-  }
-}
+
+
 app.use(
   express.static(path.join(__dirname, 'public'), {
     setHeaders: setCustomHeaders,
