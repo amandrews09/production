@@ -17,22 +17,29 @@ router.get('/data', async (req, res) => {
       ],
     });
     // Serialize data so the template can read it
-    const products = productData.map((Product) => Product.get({ plain: true }));
-console.log("!!!!!!!!!!!", products);
-const currentUser = await User.findByPk(req.session.user_id);
-console.log("currentUser", currentUser);
-const isManager = currentUser.role ==='manager';
-console.log("isManager", isManager);
-    // Pass serialized data and session flag into template
+    const products = await productData.map(Product => Product.get({ plain: true }));
+
+    const currentUser = await User.findByPk(req.session.user_id);
+
+    let user;
+    if (currentUser) {
+      user = currentUser.get({ plain: true });
+    }
+
+    const isManager = user.role === 'manager';
+
     res.render('data', {
       products,
       isManager,
-      logged_in: req.session.logged_in
+      user,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+//
 // router.get('/product/:id', async (req, res) => {
 //   try {
 //     const productData = await Product.findByPk(req.params.id, {
@@ -75,6 +82,8 @@ console.log("isManager", isManager);
 //     res.status(500).json(err);
 //   }
 // });
+//
+
 router.get('/', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -88,8 +97,11 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 router.get('/warning', (req, res) => {
-    res.render('warning');
-})
+  res.render('warning');
+});
+
+//
+
 // router.get('/comment/:id', withAuth, async (req, res) => {
 //   const productData = await Product.findByPk(req.params.id,
 //     {include: [User,
@@ -106,4 +118,5 @@ router.get('/warning', (req, res) => {
 //   const productDataPlain = productData.get({ plain: true });
 //   res.render('edit', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
 // })
+
 module.exports = router;
