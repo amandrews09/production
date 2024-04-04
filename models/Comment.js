@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-class Product extends Model {}
-Product.init(
+class Comment extends Model {}
+Comment.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -9,14 +9,19 @@ Product.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    text: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    location: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue:"California"
+    // needed_funding: {
+    //   type: DataTypes.FLOAT,
+    //   allowNull: false,
+    // },
+    product_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'product',
+        key: 'id',
+      },
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -31,7 +36,7 @@ Product.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product',
+    modelName: 'comment',
   }
 );
-module.exports = Product;
+module.exports = Comment;
