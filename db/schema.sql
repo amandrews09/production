@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS timeTracker_db;
-CREATE DATABASE timeTracker_db; 
+DROP DATABASE IF EXISTS project2_db;
+CREATE DATABASE project2_db; 
