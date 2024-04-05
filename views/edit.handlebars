@@ -1,0 +1,36 @@
+<div>
+  <h2>{{productDataPlain.name}}</h2>
+  <p>{{productDataPlain.text}}</p>
+  <p>Created by {{productDataPlain.user.name}} on {{format_date productDataPlain.date_created}}</p>
+ 
+  <h3>Comments:</h3>
+  {{#each productDataPlain.comments as |comment| }}
+    <p>{{comment.text}} by {{comment.user.name}}</p> 
+  {{/each}}
+  
+  <div>
+    <h4>Edit your product:</h4>
+    <textarea id="postText" class="form-input" style="width: 500px; height:200px">{{productDataPlain.text}}</textarea>
+    <textarea id="postComment" class="form-input" style="width: 500px; height:100px">{{productDataPlain.comment}}</textarea> <!-- Added comment field -->
+    <button type="submit" id="btn" userId={{userId}} productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+<script>
+document.getElementById('btn').addEventListener('click', async function(){
+  const productId = document.getElementById('btn').getAttribute('postId')
+  const productText = document.getElementById('postText').value;
+  const productComment = document.getElementById('postComment').value; // Retrieve comment value
+  const userId = document.getElementById('btn').getAttribute('userId')
+  
+  const res = await fetch(`/api/products/${productId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ text: productText, comment: productComment, user_id: userId}), // Include comment in the request body
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (res.ok){
+    document.location.replace('/profile');
+  }
+})
+</script>
