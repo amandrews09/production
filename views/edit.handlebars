@@ -2,30 +2,27 @@
   <h2>{{productDataPlain.name}}</h2>
   <p>{{productDataPlain.text}}</p>
   <p>Created by {{productDataPlain.user.name}} on {{format_date productDataPlain.date_created}}</p>
- 
-  <h3>Comments:</h3>
-  {{#each productDataPlain.comments as |comment| }}
-    <p>{{comment.text}} by {{comment.user.name}}</p> 
-  {{/each}}
   
   <div>
     <h4>Edit your product:</h4>
-    <textarea id="postText" class="form-input" style="width: 500px; height:200px">{{productDataPlain.text}}</textarea>
-    <textarea id="postComment" class="form-input" style="width: 500px; height:100px">{{productDataPlain.comment}}</textarea> <!-- Added comment field -->
+    <input id="productName" class="form-input" placeholder="{{productDataPlain.name}}"></input>
+    <input id="technician" type="text" class="form-input" placeholder="technician" name="technician">
+    <input id="productComment" class="form-input" placeholder="{{productDataPlain.location}}"></input> <!-- Added comment field -->
     <button type="submit" id="btn" userId={{userId}} productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
   </div>
 </div>
 
 <script>
 document.getElementById('btn').addEventListener('click', async function(){
-  const productId = document.getElementById('btn').getAttribute('postId')
-  const productText = document.getElementById('postText').value;
-  const productComment = document.getElementById('postComment').value; // Retrieve comment value
+  const productId = document.getElementById('btn').getAttribute('productId')
+  const technician = document.getElementById('technician').value
+  const productText = document.getElementById('productName').value;
+  const productComment = document.getElementById('productComment').value; // Retrieve comment value
   const userId = document.getElementById('btn').getAttribute('userId')
   
   const res = await fetch(`/api/products/${productId}`, {
     method: 'PUT',
-    body: JSON.stringify({ text: productText, comment: productComment, user_id: userId}), // Include comment in the request body
+    body: JSON.stringify({ name: productText, user_id: userId, technician: technician, location: productComment}), // Include comment in the request body
     headers: { 'Content-Type': 'application/json' },
   })
 

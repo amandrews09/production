@@ -1,13 +1,14 @@
 <h1>{{user.name}}</h1>
 {{#if isManager}}
   <a href='/register'>Create Employee</a>
-  <a href='/profile'>Create A Product</a>
+  <a href='/profile'>Create/Delete A Product</a>
 {{/if}}
 <table>
   <tr>
     <th>Name</th>
     <th>Location</th>
     <th>Technician</th>
+    <th>Created By</th>
     <th>Comment</th>
   </tr>
   {{#each products as |product|}}
@@ -16,22 +17,11 @@
       <a href='/product/{{product.id}}'>{{product.name}}</a>
       </td>
       <td>{{product.location}}</td>
+      <td>{{product.technician}}</td>
       <td>{{product.user.name}}</td>
       <td>{{#each product.comments as |comment|}}
           <p>{{comment.text}}</p>
         {{/each}}</td>
     </tr>
-
-    {{!-- {{#each products as |product| }}
-    <tr class="product">
-      <td>
-        <a href="/product/{{product.id}}">{{product.name}}</a>
-      </td>
-      <td>{{product.user.name}}</td>
-      <td>{{format_date product.date_created}}</td>
-      <td>{{product.name}}</td>
-      <td>{{product.comment}}</td>
-    </tr>
-{{/each}} --}}
-  {{/each}}
+{{/each}}
 </table>

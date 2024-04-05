@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Product } = require('../../models');
 const withAuth = require('../../utils/auth');
 router.post('/', withAuth, async (req, res) => {
+  console.log(req.body);
   try {
     const newProduct = await Product.create({
       ...req.body,
@@ -13,6 +14,7 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 router.put('/:id', withAuth, async (req, res) => {
+  console.log(req.body);
   try {
     const newProduct = await Product.update(req.body,{
       where:{id: req.params.id}

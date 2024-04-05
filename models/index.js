@@ -22,4 +22,5 @@ Product.hasMany(Comment, {
 Comment.belongsTo(Product, {
   foreignKey: 'product_id'
 });
+
 module.exports = { User, Product, Comment };

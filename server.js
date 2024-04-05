@@ -24,6 +24,7 @@ function setCustomHeaders(res, path) {
     res.setHeader('Content-Type', 'application/javascript');
   }
 }
+
 app.use(session(sess));
 // Middleware to set currentUser
 app.use((req, res, next) => {
