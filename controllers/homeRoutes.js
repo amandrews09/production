@@ -39,50 +39,51 @@ router.get('/data', async (req, res) => {
   }
 });
 
-//
-// router.get('/product/:id', async (req, res) => {
-//   try {
-//     const productData = await Product.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['name', 'id'],
-//         },
-//         {model:Comment, include:[User],
-//         attributes:['text']}
-//       ],
-//     });
-//     const product = productData.get({ plain: true });
-//     const userId = req.session.user_id;
-//     const productUserId = product.user_id;
-//     const sameUser = userId === productUserId;
-//     res.render('product', {
-//       ...product,
-//       logged_in: req.session.logged_in,
-//       sameUser
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-// // Use withAuth middleware to prevent access to route
-// router.get('/profile', withAuth, async (req, res) => {
-//   try {
-//     // Find the logged in user based on the session ID
-//     const userData = await User.findByPk(req.session.user_id, {
-//       attributes: { exclude: ['password'] },
-//       include: [Product],
-//     });
-//     const user = userData.get({ plain: true });
-//     res.render('profile', {
-//       ...user,
-//       logged_in: true
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-//
+
+router.get('/product/:id', async (req, res) => {
+  try {
+    const productData = await Product.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['name', 'id'],
+        },
+        {model:Comment, include:[User],
+        attributes:['text']}
+      ],
+    });
+    const product = productData.get({ plain: true });
+    const userId = req.session.user_id;
+    const productUserId = product.user_id;
+    const sameUser = userId === productUserId;
+    res.render('product', {
+      ...product,
+      logged_in: req.session.logged_in,
+      sameUser
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Use withAuth middleware to prevent access to route
+router.get('/profile', withAuth, async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [Product],
+    });
+    const user = userData.get({ plain: true });
+    res.render('profile', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 router.get('/', (req, res) => {
   // If the user is already logged in, redirect the request to another route
@@ -92,6 +93,7 @@ router.get('/', (req, res) => {
   }
   res.render('login');
 });
+
 router.get('/register', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   res.render('register');
@@ -102,21 +104,21 @@ router.get('/warning', (req, res) => {
 
 //
 
-// router.get('/comment/:id', withAuth, async (req, res) => {
-//   const productData = await Product.findByPk(req.params.id,
-//     {include: [User,
-//       {model:Comment, attributes:['text'], include:[User],
-//   }]});
-//   const productDataPlain = productData.get({ plain: true });
-//   res.render('comment', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
-// })
-// router.get('/edit/:id', withAuth, async (req, res) => {
-//   const productData = await Product.findByPk(req.params.id,
-//     {include: [User,
-//       {model:Comment, attributes:['text'], include:[User],
-//   }]});
-//   const productDataPlain = productData.get({ plain: true });
-//   res.render('edit', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
-// })
+router.get('/comment/:id', withAuth, async (req, res) => {
+  const productData = await Product.findByPk(req.params.id,
+    {include: [User,
+      {model:Comment, attributes:['text'], include:[User],
+  }]});
+  const productDataPlain = productData.get({ plain: true });
+  res.render('comment', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
+})
+router.get('/edit/:id', withAuth, async (req, res) => {
+  const productData = await Product.findByPk(req.params.id,
+    {include: [User,
+      {model:Comment, attributes:['text'], include:[User],
+  }]});
+  const productDataPlain = productData.get({ plain: true });
+  res.render('edit', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
+})
 
 module.exports = router;

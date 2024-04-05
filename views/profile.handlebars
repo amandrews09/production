@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Welcome, {{name}}!</h2>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h3>Create a New Product:</h3>
+
+      <form class="form new-project-form">
+        <div class="form-group row">
+          <label for="project-name" class="col-sm-3 col-form-label">Name:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" id="project-name" name="project-name" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {{#if products.length}}
+    <div class="col-md-6 project-list">
+      <h3>Current Products:</h3>
+
+      {{#each products as |product|}}
+      <div class="row mb-2">
+        <div class="col-md-8">
+          <h4><a href="/product/{{product.id}}">{{product.name}}</a></h4>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-sm btn-danger" data-id="{{product.id}}">DELETE</button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<script src="./js/profile.js"></script>
