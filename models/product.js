@@ -17,6 +17,10 @@ Product.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    comment: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     location: {
       type: DataTypes.STRING,
       allowNull: true,

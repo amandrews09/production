@@ -7,7 +7,8 @@
     <h4>Edit your product:</h4>
     <input id="productName" class="form-input" placeholder="{{productDataPlain.name}}"></input>
     <input id="technician" type="text" class="form-input" placeholder="technician" name="technician">
-    <input id="productComment" class="form-input" placeholder="{{productDataPlain.location}}"></input> <!-- Added comment field -->
+    <input id="productLocation" class="form-input" placeholder="{{productDataPlain.location}}"></input> <br>
+    <textarea id="productComment" cols="30" rows="5" placeholder="Comments"></textarea>
     <button type="submit" id="btn" userId={{userId}} productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
   </div>
 </div>
@@ -17,12 +18,13 @@ document.getElementById('btn').addEventListener('click', async function(){
   const productId = document.getElementById('btn').getAttribute('productId')
   const technician = document.getElementById('technician').value
   const productText = document.getElementById('productName').value;
-  const productComment = document.getElementById('productComment').value; // Retrieve comment value
+  const productLocation = document.getElementById('productLocation').value;
+  const productComment = document.getElementById('productComment').value;
   const userId = document.getElementById('btn').getAttribute('userId')
   
   const res = await fetch(`/api/products/${productId}`, {
     method: 'PUT',
-    body: JSON.stringify({ name: productText, user_id: userId, technician: technician, location: productComment}), // Include comment in the request body
+    body: JSON.stringify({ name: productText, user_id: userId, technician: technician, location: productLocation, comment: productComment}), // Include comment in the request body
     headers: { 'Content-Type': 'application/json' },
   })
 

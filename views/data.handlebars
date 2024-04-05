@@ -11,14 +11,12 @@
   {{#each products as |product|}}
     <tr>
       <td>
-      <a href='/product/{{product.id}}'>{{product.name}}</a>
+        <a href='/product/{{product.id}}'>{{product.name}}</a>
       </td>
       <td>{{product.location}}</td>
       <td>{{product.technician}}</td>
       <td>{{product.user.name}}</td>
-      <td>{{#each product.comments as |comment|}}
-          <p>{{comment.text}}</p>
-        {{/each}}</td>
+      <td>{{product.comment}}</td>
     </tr>
-{{/each}}
+  {{/each}}
 </table>
