@@ -15,23 +15,12 @@
   <tr>
     <td>{{name}}</td>
     <td>{{location}}</td>
-    <td></td>
-    <td></td>
+    <td>{{technician}}</td>
+    <td>{{comment}}</td>
     <td>{{user.name}}</td>
   </tr>
 </table>
 
-
-
-
- <h3>Comments:</h3>
-  {{#each comments as |comment| }}
-   <p>{{comment.text}} by {{comment.user.name}}</p>
-   {{/each}}
-
-  <p>
-    <a class="btn btn-primary comment-btn" href="/comment/{{id}}">Comment!</a>
-  </p>
   {{#if sameUser }}
   <p>
     <a class="btn btn-primary" href="/edit/{{id}}">Edit!</a>
