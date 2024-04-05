@@ -1,0 +1,86 @@
+body{
+	text-align: center;
+	font-family: "davis-sans", sans-serif;
+	font-weight: 500;
+	color: #1b3b6b;
+	font-style: normal;
+}
+
+h1, h2, h3, h4, h5
+{
+	font-family: "davis-sans", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+	color: #1b3b6b;
+}
+
+p {
+	font-family: "davis-sans", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.form-group {
+	padding: 10px;
+	border-radius: 10px;
+	position: relative;
+	overflow-y: scroll;
+}
+
+  label {
+  	font-size: 16px;
+  	text-align: left;
+	display: flex;
+	flex-direction: column;
+	color: #1b3b6b;
+
+  }
+
+  input {
+  	padding-top: 10px;
+  	padding-bottom: 10px;
+  	padding-right: 150px;
+  	font-size: 20px;
+  	border-style: solid;
+  	border-width: 2px;
+  	border-color: #5774b9;
+  	border-radius: 8px;
+  }
+
+  .register {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+
+  #role-signup {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-right: 277px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #5774b9;
+	border-radius: 8px;
+  }
+
+  button {
+	background-color: #f2b833;
+	color: #1b3b6b;
+	padding-right: 25px;
+	padding-left: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-family: "davis-sans", sans-serif;
+  }

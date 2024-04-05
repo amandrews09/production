@@ -8,7 +8,7 @@ const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const hbs = exphbs.create({ helpers });
 const app = express();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3003;
 const sess = {
   secret: 'Super secret secret',
   cookie: {},
@@ -19,6 +19,12 @@ const sess = {
   }),
 };
 // Define a function to set MIME types
+function setCustomHeaders(res, path) {
+  if (path.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+  }
+}
+
 function setCustomHeaders(res, path) {
   if (path.endsWith('.js')) {
     res.setHeader('Content-Type', 'application/javascript');
