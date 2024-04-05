@@ -13,10 +13,13 @@ Product.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    technician: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     location: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue:"California"
     },
     user_id: {
       type: DataTypes.INTEGER,

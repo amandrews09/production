@@ -1,6 +1,31 @@
 const router = require('express').Router();
 const { Product, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
+
+router.get('/products', async (req, res) => {
+  try {
+    const productData = await Product.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Comment,
+          include: [Product],
+          attributes: ['text'],
+        },
+      ],
+    });
+
+    // const product = productData.map(Product => Product.get({ plain: true }));
+
+   res.status(200).json(productData)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get('/data', async (req, res) => {
   try {
     // Get all Products and JOIN with user data
