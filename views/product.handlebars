@@ -1,8 +1,28 @@
-<div class="text-center">
+{{!-- <div class="text-center">
   <h2>{{name}}</h2>
   <p>{{{get_emoji}}}</p>
   <p>{{text}}</p>
-  <p>Created by {{user.name}} on {{format_date date_created}}</p>
+  <p>Created by {{user.name}} on {{format_date date_created}}</p> --}}
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Technician</th>
+    <th>Comment</th>
+    <th>Created By</th>
+  </tr>
+  <tr>
+    <td>{{name}}</td>
+    <td>{{location}}</td>
+    <td></td>
+    <td></td>
+    <td>{{user.name}}</td>
+  </tr>
+</table>
+
+
+
 
  <h3>Comments:</h3>
   {{#each comments as |comment| }}
