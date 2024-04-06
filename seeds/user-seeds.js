@@ -9,6 +9,12 @@ const userData =
       "role": "manager"
     },
     {
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "123456789",
+      "role": "manager"
+    },
+    {
       "name": "Harry Potter",
       "email": "hpotter@hotmail.com",
       "password": "password12345",

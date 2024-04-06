@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-class Product extends Model {}
+class Product extends Model { }
 Product.init(
   {
     id: {
@@ -13,10 +13,10 @@ Product.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    technician: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // technician: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
     comment: {
       type: DataTypes.STRING,
       allowNull: true,

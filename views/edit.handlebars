@@ -5,11 +5,20 @@
   
   <div>
     <h4>Edit your product:</h4>
+    <label>Name</label>
+    {{#if isManager}}
     <input id="productName" class="form-input" placeholder="{{productDataPlain.name}}"></input>
-    <input id="technician" type="text" class="form-input" placeholder="technician" name="technician">
+    {{/if}}
+    {{#unless isManager}}
+    <h3><p id="productName">{{productDataPlain.name}}</p></h3>
+    {{/unless}}<br>
+    <label>Created By</label></div><br>
+    <input id="technician" type="text" class="form-input" userId="{{userId}}" placeholder="{{productDataPlain.user.name}}" name="technician"><br>
+    <label>Location</label><br>
     <input id="productLocation" class="form-input" placeholder="{{productDataPlain.location}}"></input> <br>
-    <textarea id="productComment" cols="30" rows="5" placeholder="Comments"></textarea>
-    <button type="submit" id="btn" userId={{userId}} productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
+    <label>Comments</label><br>
+    <textarea id="productComment" class="form-input" placeholder="{{productDataPlain.comment}}"></textarea> <br>
+    <button type="submit" id="btn" productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
   </div>
 </div>
 
@@ -20,16 +29,16 @@ document.getElementById('btn').addEventListener('click', async function(){
   const productText = document.getElementById('productName').value;
   const productLocation = document.getElementById('productLocation').value;
   const productComment = document.getElementById('productComment').value;
-  const userId = document.getElementById('btn').getAttribute('userId')
+  const userId = document.getElementById('technician').getAttribute('userId')
   
   const res = await fetch(`/api/products/${productId}`, {
     method: 'PUT',
-    body: JSON.stringify({ name: productText, user_id: userId, technician: technician, location: productLocation, comment: productComment}), // Include comment in the request body
+    body: JSON.stringify({ name: productText, user_id: userId, location: productLocation, comment: productComment}), 
     headers: { 'Content-Type': 'application/json' },
   })
 
   if (res.ok){
-    document.location.replace('/profile');
+    document.location.replace('/data');
   }
 })
 </script>

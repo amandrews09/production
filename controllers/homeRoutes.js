@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { Product, User, Comment } = require('../models');
+const { Product, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/products', async (req, res) => {
+router.get('/createproduct', async (req, res) => {
   try {
     const productData = await Product.findAll({
       include: [
@@ -10,17 +10,17 @@ router.get('/products', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
-        {
-          model: Comment,
-          include: [Product],
-          attributes: ['text'],
-        },
+       
       ],
     });
 
-    // const product = productData.map(Product => Product.get({ plain: true }));
-
-   res.status(200).json(productData)
+    const products = productData.map(Product => Product.get({ plain: true }));
+    res.render('createproduct', {
+      products,
+      
+      logged_in: req.session.logged_in,
+    });
+    
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,11 +34,7 @@ router.get('/data', async (req, res) => {
         {
           model: User,
           attributes: ['name', 'role'],
-        },
-        {
-          model: Comment,
-          attributes: ['text'],
-        },
+        }        
       ],
     });
     // Serialize data so the template can read it
@@ -72,9 +68,7 @@ router.get('/product/:id', async (req, res) => {
         {
           model: User,
           attributes: ['name', 'id'],
-        },
-        {model:Comment, include:[User],
-        attributes:['text']}
+        }
       ],
     });
     const product = productData.get({ plain: true });
@@ -92,22 +86,22 @@ router.get('/product/:id', async (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [Product],
-    });
-    const user = userData.get({ plain: true });
-    res.render('profile', {
-      ...user,
-      logged_in: true
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.get('/profile', withAuth, async (req, res) => {
+//   try {
+//     // Find the logged in user based on the session ID
+//     const userData = await User.findByPk(req.session.user_id, {
+//       attributes: { exclude: ['password'] },
+//       include: [Product],
+//     });
+//     const user = userData.get({ plain: true });
+//     res.render('profile', {
+//       ...user,
+//       logged_in: true
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 
 router.get('/', (req, res) => {
@@ -129,21 +123,26 @@ router.get('/warning', (req, res) => {
 
 //
 
-router.get('/comment/:id', withAuth, async (req, res) => {
-  const productData = await Product.findByPk(req.params.id,
-    {include: [User,
-      {model:Comment, attributes:['text'], include:[User],
-  }]});
-  const productDataPlain = productData.get({ plain: true });
-  res.render('comment', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
-})
+
 router.get('/edit/:id', withAuth, async (req, res) => {
   const productData = await Product.findByPk(req.params.id,
-    {include: [User,
-      {model:Comment, attributes:['text'], include:[User],
-  }]});
+    {
+      include: [User]
+    });
   const productDataPlain = productData.get({ plain: true });
-  res.render('edit', {productDataPlain, logged_in: req.session.logged_in, userId: req.session.user_id});
+  const currentUser = await User.findByPk(req.session.user_id);
+
+  let user;
+  if (currentUser) {
+    user = currentUser.get({ plain: true });
+  }
+
+  const isManager = user.role === 'manager';
+
+  res.render('edit', { productDataPlain, 
+    logged_in: req.session.logged_in, 
+    userId: req.session.user_id,
+  isManager });
 })
 
 module.exports = router;
