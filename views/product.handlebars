@@ -1,29 +1,23 @@
-{{!-- <div class="text-center">
-  <h2>{{name}}</h2>
-  <p>{{{get_emoji}}}</p>
-  <p>{{text}}</p>
-  <p>Created by {{user.name}} on {{format_date date_created}}</p> --}}
-
 <table>
   <tr>
     <th>Name</th>
     <th>Location</th>
-    <th>Technician</th>
+    
     <th>Comment</th>
     <th>Created By</th>
   </tr>
   <tr>
     <td>{{name}}</td>
     <td>{{location}}</td>
-    <td>{{technician}}</td>
+
     <td>{{comment}}</td>
     <td>{{user.name}}</td>
   </tr>
 </table>
 
-  {{#if sameUser }}
+ 
   <p>
     <a class="btn btn-primary" href="/edit/{{id}}">Edit!</a>
   </p>
-  {{/if}}
+
 </div>
