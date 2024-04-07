@@ -31,7 +31,7 @@ form {
 	padding: 10px;
 	border-radius: 10px;
 	position: relative;
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 }
 
   label {

@@ -2,36 +2,55 @@
 
 <p>
   {{#if isManager}}
-          <a href='/register'>Create Employee</a>
+  <a href='/register'>Create Employee</a>
   <a href='/createproduct'>Create a Product</a>
   {{/if}}
 </p>
 
+<style>
+  .print-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Location</th>
-   
-    <th>Created By</th>
-    <th>Comment</th>
-  </tr>
-  {{#each products as |product|}}
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Created By</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each products as |product|}}
     <tr>
       <td>
         <a href='/product/{{product.id}}'>{{product.name}}</a>
       </td>
       <td>{{product.location}}</td>
-
       <td>{{product.user.name}}</td>
-      <td>
-        {{product.comment}}
-      </td>
-      
-
+      <td>{{product.comment}}</td>
     </tr>
-    {{!-- <p>
-    <a class="btn btn-primary" href="/edit/{{product.id}}">Edit!</a>
-  </p> --}}
-  {{/each}}
+    {{/each}}
+  </tbody>
 </table>
 
+<button class="print-button" onclick="window.print()">Print</button>
