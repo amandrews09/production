@@ -76,12 +76,21 @@ const delButtonHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/data');
+      // Check if the response status is 204 (No Content)
+      if (response.status === 204) {
+        // Product was successfully deleted
+        document.location.replace('/data');
+      } else {
+        // Product was not found
+        alert('Product not found');
+      }
     } else {
+      // Other error occurred
       alert('Failed to delete product');
     }
   }
 };
+
 
 document
   .querySelector('.new-project-form')
