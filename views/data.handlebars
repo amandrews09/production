@@ -7,45 +7,22 @@
   {{/if}}
 </p> --}}
 
-<style>
-  .print-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
 
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  th,
-  td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-</style>
-
-{{#if isManager}}
+{{!--{{#if isManager}}
 <a href='/register'>Create Employee</a>
 <a href='/createproduct'>Create A Product</a>
 <a href='/data'>Dashboard</a>
 
-{{/if}}
+{{/if}}--}}
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Created By</th>
-      <th>Comment</th>
-      <th>Tracking</th>
+      <th>NAME</th>
+      <th>LOCATION</th>
+      <th>CREATED BY</th>
+      <th>COMMENT</th>
+      <th>TRACKING</th>
     </tr>
   </thead>
 
@@ -58,7 +35,7 @@
       <td>{{product.location}}</td>
       <td>{{user.name}}</td>
       <td>{{product.comment}}</td>
-    </tr>
+
 
     {{!-- <tr>
 
@@ -83,7 +60,7 @@
     </td> --}}
 
     {{!-- Date and Time functionality --}}
-    <tr>
+
       <td>
         {{!-- <button class="btn btn-primary time-entry" data-product-id="{{product.id}}">New Time Entry</button> --}}
 
