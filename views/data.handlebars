@@ -3,7 +3,7 @@
 {{!-- <p>
   {{#if isManager}}
   <a href='/register'>Create Employee</a>
-  <a href='/createproduct'>Create a Product</a>
+  <a href='/createproduct'>Product Managment</a>
   {{/if}}
 </p> --}}
 
@@ -56,7 +56,7 @@
         <a href='/product/{{product.id}}'>{{product.name}}</a>
       </td>
       <td>{{product.location}}</td>
-      <td>{{product.user.name}}</td>
+      <td>{{user.name}}</td>
       <td>{{product.comment}}</td>
     </tr>
 
