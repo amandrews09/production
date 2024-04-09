@@ -1,8 +1,38 @@
 const router = require('express').Router();
 const { Product } = require('../../models');
 const withAuth = require('../../utils/auth');
-// const moment = require('moment');
 
+router.get('/', async (req, res) => {
+  try {
+    const productData = await Product.findAll({
+    });
+    res.json(productData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+
+router.get('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const product = await Product.findByPk(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const productDetails = {
+      ...product.get({ plain: true })
+    };
+
+    res.json(productDetails);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching product details' });
+  }
+});
 
 router.post('/', withAuth, async (req, res) => {
   console.log(req.body);
@@ -20,8 +50,8 @@ router.post('/', withAuth, async (req, res) => {
 router.put('/:id', withAuth, async (req, res) => {
   console.log(req.body);
   try {
-    const newProduct = await Product.update(req.body,{
-      where:{id: req.params.id}
+    const newProduct = await Product.update(req.body, {
+      where: { id: req.params.id }
     },
     );
     res.status(200).json(newProduct);
