@@ -16,10 +16,9 @@ router.post('/', withAuth, async (req, res) => {
 router.put('/:id', withAuth, async (req, res) => {
   console.log(req.body);
   try {
-    const newProduct = await Product.update(req.body,{
-      where:{id: req.params.id}
-    },
-    );
+    const newProduct = await Product.update(req.body, {
+      where: { id: req.params.id },
+    });
     res.status(200).json(newProduct);
   } catch (err) {
     res.status(400).json(err);

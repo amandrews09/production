@@ -1,7 +1,8 @@
 <div>
+  <h1>Product:</h1>
   <h2>{{productDataPlain.name}}</h2>
   <p>{{productDataPlain.text}}</p>
-  <p>Created by {{productDataPlain.user.name}}</p>
+  <p>Last edited by {{productDataPlain.user.name}}</p>
   
   <div>
     <h4>Edit your product:</h4>
@@ -12,8 +13,15 @@
     {{#unless isManager}}
     <h3><p id="productName">{{productDataPlain.name}}</p></h3>
     {{/unless}}
-    <label for="technician" style="width: 100px; display: inline-block;">Created By:</label>
-    <input id="technician" type="text" class="form-input" userId="{{userId}}" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.user.name}}" name="technician" value="{{productDataPlain.user.name}}"><br>
+    <label for="technician" style="width: 100px; display: inline-block;">Current Technician:</label>
+    {{!-- <input id="technician" type="text" class="form-input" userId="{{userId}}" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.user.name}}" name="technician" value="{{productDataPlain.technician}}">  <br> --}}
+   <select name="technician" id="technician">
+    <option value="empty"></option>
+  {{#each options}}
+    <option value="{{this.id}}" {{#ifCond ../productDataPlain.userId '===' this.id}}{{/ifCond}}>{{this.name}}</option>
+  {{/each}}
+</select>
+ <br>
     <label for="productLocation" style="width: 100px; display: inline-block;">Location:</label>
     <input id="productLocation" class="form-input" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.location}}" value="{{productDataPlain.location}}"><br>
     <label for="productComment" style="width: 100px; display: inline-block;">Comments:</label>
@@ -35,7 +43,7 @@ document.getElementById('btn').addEventListener('click', async function(event){
   
   const res = await fetch(`/api/products/${productId}`, {
     method: 'PUT',
-    body: JSON.stringify({ name: productText, user_id: userId, location: productLocation, comment: productComment }), 
+    body: JSON.stringify({ name: productText, user_id: technician, location: productLocation, comment: productComment }), 
     headers: { 'Content-Type': 'application/json' },
   });
 

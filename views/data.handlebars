@@ -3,7 +3,7 @@
 <p>
   {{#if isManager}}
   <a href='/register'>Create Employee</a>
-  <a href='/createproduct'>Create a Product</a>
+  <a href='/createproduct'>Product Managment</a>
   {{/if}}
 </p>
 
@@ -33,10 +33,10 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Created By</th>
-      <th>Comment</th>
+      <th>PRODUCT NAME</th>
+      <th>LOCATION</th>
+      <th>CURRENT TECHNICIAN</th>
+      <th>COMMENT</th>
     </tr>
   </thead>
   <tbody>
@@ -46,7 +46,7 @@
         <a href='/product/{{product.id}}'>{{product.name}}</a>
       </td>
       <td>{{product.location}}</td>
-      <td>{{product.user.name}}</td>
+      <td>{{user.name}}</td>
       <td>{{product.comment}}</td>
     </tr>
     {{/each}}
