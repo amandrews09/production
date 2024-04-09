@@ -1,11 +1,11 @@
 <h1>{{user.name}}</h1>
 
-<p>
+{{!-- <p>
   {{#if isManager}}
   <a href='/register'>Create Employee</a>
   <a href='/createproduct'>Create a Product</a>
   {{/if}}
-</p>
+</p> --}}
 
 <style>
   .print-button {
@@ -13,13 +13,14 @@
     bottom: 20px;
     right: 20px;
   }
-  
+
   table {
     border-collapse: collapse;
     width: 100%;
   }
 
-  th, td {
+  th,
+  td {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
@@ -30,6 +31,13 @@
   }
 </style>
 
+{{#if isManager}}
+<a href='/register'>Create Employee</a>
+<a href='/createproduct'>Create A Product</a>
+<a href='/data'>Dashboard</a>
+
+{{/if}}
+
 <table>
   <thead>
     <tr>
@@ -37,8 +45,10 @@
       <th>Location</th>
       <th>Created By</th>
       <th>Comment</th>
+      <th>Tracking</th>
     </tr>
   </thead>
+
   <tbody>
     {{#each products as |product|}}
     <tr>
@@ -48,6 +58,60 @@
       <td>{{product.location}}</td>
       <td>{{product.user.name}}</td>
       <td>{{product.comment}}</td>
+    </tr>
+
+    {{!-- <tr>
+
+      <th>Name</th>
+      <th>Location</th>
+      <th>Technician</th>
+      <th>Comment</th>
+      <th>Tracking</th>
+    </tr> --}}
+
+    {{!-- {{#each products as |product|}}
+
+    <td>
+      <a href='/product/{{product.id}}'>{{product.name}}</a>
+    </td>
+    <td>{{product.location}}</td>
+    <td>{{product.user.name}}</td>
+    <td>
+      {{#each product.comments as |comment|}}
+      <p>{{comment.text}}</p>
+      {{/each}}
+    </td> --}}
+
+    {{!-- Date and Time functionality --}}
+    <tr>
+      <td>
+        {{!-- <button class="btn btn-primary time-entry" data-product-id="{{product.id}}">New Time Entry</button> --}}
+
+        <div id="time-controls-{{product.id}}">
+          {{!-- <input type="text" class="datepicker" id="datepicker-{{product.id}}" hidden> --}}
+          <button class="start" data-product-id="{{product.id}}">Start</button>
+          <button class="stop" data-product-id="{{product.id}}">Stop</button>
+          <div class="duration" data-product-id="{{product.id}}"></div>
+        </div>
+        <!-- Placeholders for date and start time -->
+        {{!-- <div id="selected-date-{{product.id}}">
+          {{#if product.selectedDate}}
+          Selected Date: {{product.selectedDate}}
+          {{/if}}
+        </div> --}}
+        <div id="start-time-{{product.id}}">
+          {{#if product.startTime}}
+          Start Time: {{product.startTime}}
+          {{/if}}
+        </div>
+        <div id="stop-time-{{product.id}}">
+          {{#if product.stopTime}}
+          Stop Time: {{product.stopTime}}
+          {{/if}}
+        </div>
+        <div id="duration-{{product.id}}"></div>
+      </td>
+
     </tr>
     {{/each}}
   </tbody>
