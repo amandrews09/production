@@ -75,9 +75,14 @@ const delButtonHandler = async (event) => {
       method: 'DELETE',
     });
 
+    console.log(response.status);
+
+    const responseBody = await response.text();
+    console.log(responseBody); 
+
     if (response.ok) {
-      // Check if the response status is 204 (No Content)
-      if (response.status === 204) {
+      
+      if (response.status === 200) {
         // Product was successfully deleted
         document.location.replace('/data');
       } else {
@@ -92,12 +97,17 @@ const delButtonHandler = async (event) => {
 };
 
 
+
 document
   .querySelector('.new-project-form')
   .addEventListener('submit', newFormHandler);
 
-document
+/*document
   .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
+  .addEventListener('click', delButtonHandler);*/
 
+  const projectList = document.querySelector('.project-list');
+  if (projectList) {
+    projectList.addEventListener('click', delButtonHandler);
+  }
 </script>
