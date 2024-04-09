@@ -1,24 +1,58 @@
 <h1>{{user.name}}</h1>
-
+{{#if isManager}}
+<a href='/register'>Create Employee</a>
+<a href='/profile'>Create A Product</a>
+{{/if}}
 <table>
   <tr>
     <th>Name</th>
     <th>Location</th>
     <th>Technician</th>
-    <th>Created By</th>
     <th>Comment</th>
+    <th>Tracking</th>
   </tr>
   {{#each products as |product|}}
-    <tr>
-      <td>
+  <tr>
+    <td>
       <a href='/product/{{product.id}}'>{{product.name}}</a>
-      </td>
-      <td>{{product.location}}</td>
-      <td>{{product.technician}}</td>
-      <td>{{product.user.name}}</td>
-      <td>{{#each product.comments as |comment|}}
-          <p>{{comment.text}}</p>
-        {{/each}}</td>
-    </tr>
-{{/each}}
+    </td>
+    <td>{{product.location}}</td>
+    <td>{{product.user.name}}</td>
+    <td>
+      {{#each product.comments as |comment|}}
+      <p>{{comment.text}}</p>
+      {{/each}}
+    </td>
+
+    {{!-- Date and Time functionality --}}
+    <td>
+      {{!-- <button class="btn btn-primary time-entry" data-product-id="{{product.id}}">New Time Entry</button> --}}
+
+      <div id="time-controls-{{product.id}}">
+        {{!-- <input type="text" class="datepicker" id="datepicker-{{product.id}}" hidden> --}}
+        <button class="start" data-product-id="{{product.id}}">Start</button>
+        <button class="stop" data-product-id="{{product.id}}">Stop</button>
+        <div class="duration" data-product-id="{{product.id}}"></div>
+      </div>
+      <!-- Placeholders for date and start time -->
+      {{!-- <div id="selected-date-{{product.id}}">
+        {{#if product.selectedDate}}
+        Selected Date: {{product.selectedDate}}
+        {{/if}}
+      </div> --}}
+      <div id="start-time-{{product.id}}">
+        {{#if product.startTime}}
+        Start Time: {{product.startTime}}
+        {{/if}}
+      </div>
+      <div id="stop-time-{{product.id}}">
+        {{#if product.stopTime}}
+        Stop Time: {{product.stopTime}}
+        {{/if}}
+      </div>
+      <div id="duration-{{product.id}}"></div>
+    </td>
+
+  </tr>
+  {{/each}}
 </table>
