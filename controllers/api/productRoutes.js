@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const { Product } = require('../../models');
 const withAuth = require('../../utils/auth');
+// const moment = require('moment');
+
+
 router.post('/', withAuth, async (req, res) => {
   console.log(req.body);
   try {
@@ -13,17 +16,20 @@ router.post('/', withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 router.put('/:id', withAuth, async (req, res) => {
   console.log(req.body);
   try {
-    const newProduct = await Product.update(req.body, {
-      where: { id: req.params.id },
-    });
+    const newProduct = await Product.update(req.body,{
+      where:{id: req.params.id}
+    },
+    );
     res.status(200).json(newProduct);
   } catch (err) {
     res.status(400).json(err);
   }
 });
+
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     const productData = await Product.destroy({

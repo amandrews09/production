@@ -1,8 +1,31 @@
 const router = require('express').Router();
 const { Product, User } = require('../models');
-const { options } = require('../models/Product');
 const withAuth = require('../utils/auth');
 const moment = require('moment');
+
+// router.get('/products', async (req, res) => {
+//   try {
+//     const productData = await Product.findAll({
+//       include: [
+//         {
+//           model: User,
+//           attributes: ['name'],
+//         },
+//         {
+//           model: Comment,
+//           include: [Product],
+//           attributes: ['text'],
+//         },
+//       ],
+//     });
+
+//     // const product = productData.map(Product => Product.get({ plain: true }));
+
+//    res.status(200).json(productData)
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/createproduct', async (req, res) => {
   try {
@@ -12,15 +35,32 @@ router.get('/createproduct', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+       
       ],
     });
 
+    const productsFormatted = productData.map(product => {
+      const productPlain = product.get({ plain: true });
+      // if (productPlain.selectedDate) {
+      //   productPlain.selectedDate = moment(productPlain.selectedDate).format('ddd MMM DD YYYY');
+      // }
+      if (productPlain.startTime) {
+        productPlain.startTime = moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss');
+      }
+      if (productPlain.stopTime) {
+        productPlain.stopTime = moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss');
+      }
+      return productPlain;
+    });
+
+    res.status(200).json(productsFormatted);
     const products = productData.map(Product => Product.get({ plain: true }));
     res.render('createproduct', {
       products,
-
+      
       logged_in: req.session.logged_in,
     });
+    
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,18 +74,17 @@ router.get('/data', async (req, res) => {
         {
           model: User,
           attributes: ['name', 'role'],
-        },
+        }        
       ],
     });
     // Serialize data so the template can read it
-    // const products = await productData.map(Product => Product.get({ plain: true }));
     const products = productData.map(product => {
-        const productPlain = product.get({ plain: true });
-        // productPlain.selectedDate = productPlain.selectedDate ? moment(productPlain.selectedDate).format('ddd MMM DD YYYY') : null;
-        productPlain.startTime = productPlain.startTime ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
-        productPlain.stopTime = productPlain.stopTime ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
-        return productPlain;
-      });
+      const productPlain = product.get({ plain: true });
+      // productPlain.selectedDate = productPlain.selectedDate ? moment(productPlain.selectedDate).format('ddd MMM DD YYYY') : null;
+      productPlain.startTime = productPlain.startTime ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
+      productPlain.stopTime = productPlain.stopTime ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
+      return productPlain;
+    });
 
     const currentUser = await User.findByPk(req.session.user_id);
 
@@ -67,6 +106,7 @@ router.get('/data', async (req, res) => {
   }
 });
 
+
 router.get('/product/:id', async (req, res) => {
   try {
     const productData = await Product.findByPk(req.params.id, {
@@ -74,7 +114,7 @@ router.get('/product/:id', async (req, res) => {
         {
           model: User,
           attributes: ['name', 'id'],
-        },
+        }
       ],
     });
     const product = productData.get({ plain: true });
@@ -84,7 +124,7 @@ router.get('/product/:id', async (req, res) => {
     res.render('product', {
       ...product,
       logged_in: req.session.logged_in,
-      sameUser,
+      sameUser
     });
   } catch (err) {
     res.status(500).json(err);
@@ -109,6 +149,7 @@ router.get('/product/:id', async (req, res) => {
 //   }
 // });
 
+
 router.get('/', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -128,35 +169,26 @@ router.get('/warning', (req, res) => {
 
 //
 
+
 router.get('/edit/:id', withAuth, async (req, res) => {
-  try {
-    const productData = await Product.findByPk(req.params.id, {
-      include: [User],
+  const productData = await Product.findByPk(req.params.id,
+    {
+      include: [User]
     });
-    const productDataPlain = productData.get({ plain: true });
+  const productDataPlain = productData.get({ plain: true });
+  const currentUser = await User.findByPk(req.session.user_id);
 
-    const userData = await User.findAll();
-    const options = userData.map(user => ({
-      id: user.dataValues.id,
-      name: user.dataValues.name,
-    }));
-
-    const currentUser = await User.findByPk(req.session.user_id);
-    const user = currentUser ? currentUser.get({ plain: true }) : null;
-
-    const isManager = user && user.role === 'manager';
-
-    res.render('edit', {
-      productDataPlain,
-      logged_in: req.session.logged_in,
-      userId: req.session.user_id,
-      isManager,
-      options,
-    });
-    console.log(userData);
-  } catch (err) {
-    res.status(500).json(err);
+  let user;
+  if (currentUser) {
+    user = currentUser.get({ plain: true });
   }
-});
+
+  const isManager = user.role === 'manager';
+
+  res.render('edit', { productDataPlain, 
+    logged_in: req.session.logged_in, 
+    userId: req.session.user_id,
+  isManager });
+})
 
 module.exports = router;

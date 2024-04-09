@@ -25,6 +25,14 @@ Product.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    startTime: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    stopTime: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
