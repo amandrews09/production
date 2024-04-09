@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 class Product extends Model { }
+
 Product.init(
   {
     id: {
@@ -23,6 +24,14 @@ Product.init(
     },
     location: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    startTime: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    stopTime: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
     user_id: {

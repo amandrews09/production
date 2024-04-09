@@ -1,6 +1,31 @@
 const router = require('express').Router();
 const { Product, User } = require('../models');
 const withAuth = require('../utils/auth');
+const moment = require('moment');
+
+// router.get('/products', async (req, res) => {
+//   try {
+//     const productData = await Product.findAll({
+//       include: [
+//         {
+//           model: User,
+//           attributes: ['name'],
+//         },
+//         {
+//           model: Comment,
+//           include: [Product],
+//           attributes: ['text'],
+//         },
+//       ],
+//     });
+
+//     // const product = productData.map(Product => Product.get({ plain: true }));
+
+//    res.status(200).json(productData)
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/createproduct', async (req, res) => {
   try {
@@ -14,6 +39,21 @@ router.get('/createproduct', async (req, res) => {
       ],
     });
 
+    const productsFormatted = productData.map(product => {
+      const productPlain = product.get({ plain: true });
+      // if (productPlain.selectedDate) {
+      //   productPlain.selectedDate = moment(productPlain.selectedDate).format('ddd MMM DD YYYY');
+      // }
+      if (productPlain.startTime) {
+        productPlain.startTime = moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss');
+      }
+      if (productPlain.stopTime) {
+        productPlain.stopTime = moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss');
+      }
+      return productPlain;
+    });
+
+    res.status(200).json(productsFormatted);
     const products = productData.map(Product => Product.get({ plain: true }));
     res.render('createproduct', {
       products,
@@ -38,7 +78,13 @@ router.get('/data', async (req, res) => {
       ],
     });
     // Serialize data so the template can read it
-    const products = await productData.map(Product => Product.get({ plain: true }));
+    const products = productData.map(product => {
+      const productPlain = product.get({ plain: true });
+      // productPlain.selectedDate = productPlain.selectedDate ? moment(productPlain.selectedDate).format('ddd MMM DD YYYY') : null;
+      productPlain.startTime = productPlain.startTime ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
+      productPlain.stopTime = productPlain.stopTime ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
+      return productPlain;
+    });
 
     const currentUser = await User.findByPk(req.session.user_id);
 
