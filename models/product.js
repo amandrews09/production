@@ -14,7 +14,11 @@ Product.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    technician: {
+    // technician: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    comment: {
       type: DataTypes.STRING,
       allowNull: true,
     },

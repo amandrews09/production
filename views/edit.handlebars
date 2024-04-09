@@ -5,29 +5,42 @@
   
   <div>
     <h4>Edit your product:</h4>
-    <input id="productName" class="form-input" placeholder="{{productDataPlain.name}}"></input>
-    <input id="technician" type="text" class="form-input" placeholder="technician" name="technician">
-    <input id="productComment" class="form-input" placeholder="{{productDataPlain.location}}"></input> <!-- Added comment field -->
-    <button type="submit" id="btn" userId={{userId}} productId={{productDataPlain.id}} class="btn btn-primary">Submit</button>
+    <label for="productName" style="width: 100px; display: inline-block;">Name:</label>
+    {{#if isManager}}
+    <input id="productName" class="form-input" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.name}}" value="{{productDataPlain.name}}"></input><br>
+    {{/if}}
+    {{#unless isManager}}
+    <h3><p id="productName">{{productDataPlain.name}}</p></h3>
+    {{/unless}}
+    <label for="technician" style="width: 100px; display: inline-block;">Created By:</label>
+    <input id="technician" type="text" class="form-input" userId="{{userId}}" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.user.name}}" name="technician" value="{{productDataPlain.user.name}}"><br>
+    <label for="productLocation" style="width: 100px; display: inline-block;">Location:</label>
+    <input id="productLocation" class="form-input" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.location}}" value="{{productDataPlain.location}}"><br>
+    <label for="productComment" style="width: 100px; display: inline-block;">Comments:</label>
+    <textarea id="productComment" class="form-input" style="width: calc(100% - 110px);" placeholder="{{productDataPlain.comment}}">{{productDataPlain.comment}}</textarea><br>
+    <button type="button" id="btn" productId="{{productDataPlain.id}}" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
   </div>
 </div>
 
 <script>
-document.getElementById('btn').addEventListener('click', async function(){
-  const productId = document.getElementById('btn').getAttribute('productId')
-  const technician = document.getElementById('technician').value
+document.getElementById('btn').addEventListener('click', async function(event){
+  event.preventDefault();
+  
+  const productId = document.getElementById('btn').getAttribute('productId');
+  const technician = document.getElementById('technician').value;
   const productText = document.getElementById('productName').value;
-  const productComment = document.getElementById('productComment').value; // Retrieve comment value
-  const userId = document.getElementById('btn').getAttribute('userId')
+  const productLocation = document.getElementById('productLocation').value;
+  const productComment = document.getElementById('productComment').value;
+  const userId = document.getElementById('technician').getAttribute('userId');
   
   const res = await fetch(`/api/products/${productId}`, {
     method: 'PUT',
-    body: JSON.stringify({ name: productText, user_id: userId, technician: technician, location: productComment}), // Include comment in the request body
+    body: JSON.stringify({ name: productText, user_id: userId, location: productLocation, comment: productComment }), 
     headers: { 'Content-Type': 'application/json' },
-  })
+  });
 
   if (res.ok){
-    document.location.replace('/profile');
+    document.location.replace('/data');
   }
-})
+});
 </script>

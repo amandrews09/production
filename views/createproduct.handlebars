@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Welcome</h2>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h3>Create a New Product:</h3>
+
+      <form class="form new-project-form">
+        <div class="form-group row">
+          <label for="project-name" class="col-sm-3 col-form-label">Name:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" id="project-name" name="project-name" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {{#if products.length}}
+    <div class="col-md-6 project-list">
+      <h3>Current Products:</h3>
+
+      {{#each products as |product|}}
+      <div class="row mb-2">
+        <div class="col-md-8">
+          <h4><a href="/product/{{product.id}}">{{product.name}}</a></h4>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-sm btn-danger" data-id="{{product.id}}">DELETE</button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<script>
+const newFormHandler = async (event) => {
+  event.preventDefault();
+
+  const name = document.querySelector('#project-name').value.trim();
+
+  if (name) {
+    const response = await fetch(`/api/products`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace('/data');
+    } else {
+      alert('Failed to add product');
+    }
+  }
+};
+
+const delButtonHandler = async (event) => {
+  if (event.target.hasAttribute('data-id')) {
+    const id = event.target.getAttribute('data-id');
+
+    const response = await fetch(`/api/products/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      // Check if the response status is 204 (No Content)
+      if (response.status === 204) {
+        // Product was successfully deleted
+        document.location.replace('/data');
+      } else {
+        // Product was not found
+        alert('Product not found');
+      }
+    } else {
+      // Other error occurred
+      alert('Failed to delete product');
+    }
+  }
+};
+
+
+document
+  .querySelector('.new-project-form')
+  .addEventListener('submit', newFormHandler);
+
+document
+  .querySelector('.project-list')
+  .addEventListener('click', delButtonHandler);
+
+</script>
