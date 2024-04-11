@@ -10,16 +10,27 @@ router.get('/createproduct', async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['name', 'role'],
         },
       ],
     });
 
     const products = productData.map(Product => Product.get({ plain: true }));
+
+    const currentUser = await User.findByPk(req.session.user_id);
+
+    let user;
+    if (currentUser) {
+      user = currentUser.get({ plain: true });
+    }
+
+    const isManager = user.role === 'manager';
+
     res.render('createproduct', {
       products,
-
+      isManager,
       logged_in: req.session.logged_in,
+      user
     });
   } catch (err) {
     res.status(500).json(err);
@@ -40,11 +51,15 @@ router.get('/data', async (req, res) => {
     // Serialize data so the template can read it
     // const products = await productData.map(Product => Product.get({ plain: true }));
     const products = productData.map(product => {
-        const productPlain = product.get({ plain: true });
-        productPlain.startTime = productPlain.startTime ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
-        productPlain.stopTime = productPlain.stopTime ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
-        return productPlain;
-      });
+      const productPlain = product.get({ plain: true });
+      productPlain.startTime = productPlain.startTime
+        ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss')
+        : null;
+      productPlain.stopTime = productPlain.stopTime
+        ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss')
+        : null;
+      return productPlain;
+    });
 
     const currentUser = await User.findByPk(req.session.user_id);
 
@@ -117,12 +132,26 @@ router.get('/', (req, res) => {
   res.render('login');
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', async (req, res) => {
   // If the user is already logged in, redirect the request to another route
-  res.render('register');
-});
-router.get('/warning', (req, res) => {
-  res.render('warning');
+  try {
+    const currentUser = await User.findByPk(req.session.user_id);
+
+    let user;
+    if (currentUser) {
+      user = currentUser.get({ plain: true });
+    }
+
+    console.log('this is the user' + user);
+    const isManager = user.role === 'manager';
+    res.render('register', {
+      isManager,
+      logged_in: req.session.logged_in,
+      user
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //

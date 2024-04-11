@@ -15,8 +15,10 @@ $(document).on('click', 'button.start', async function () {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to save start time.');
         }
+      
+        // Display startTime in readable format in UI
+        const displayStartTime = moment(startTime).format('ddd MMM DD YYYY HH:mm:ss');
 
-        const displayStartTime = moment(startTime).format('dddd, MMMM Do YYYY, h:mm:ss a');
         console.log("Start time saved for product " + productId);
         $('#start-time-' + productId).text("Start Time: " + displayStartTime);
     } catch (error) {
@@ -43,6 +45,7 @@ $(document).on('click', 'button.stop', async function () {
 
         // Display stopTime in readable format in UI
         const displayStopTime = moment(stopTime).format('ddd MMM DD YYYY HH:mm:ss');
+
         console.log("Stop time saved for product " + productId);
         $('#stop-time-' + productId).text("Stop Time: " + displayStopTime);
 
