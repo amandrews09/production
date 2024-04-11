@@ -11,31 +11,83 @@ body{
 main {
 	padding-left: 100px;
 	padding-right: 100px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
-h1, h2, h3, h4, h5
-{
+
+h3 {
 	font-family: "davis-sans", sans-serif;
+	font-size: 16px;
+	color: white;
 	font-weight: 500;
 	font-style: normal;
-	color: #1b3b6b;
+}
+
+.newproducts h4 a {
+	font-family: "davis-sans", sans-serif;
+	font-size: 16px;
+	color:#5774b9;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.newprod2 {
+	border: solid;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 nav img {
 	position: absolute;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	
 }
 
-nav {
+.navlistleft {
+	float: left;
+}
+
+.navlistleft li a {
+	color:#f2b833;
+}
+
+.navlistleft li a:hover,
+:visited {
+	color:#d8a628;
+}
+
+.navlistright {
+	float: right;
+	display: flex;
+	align-items: center;
+}
+
+.navlistright h1 {
+	float: left;
+	color: white;
+	padding-right: 5px;
+}
+
+
+header .topnav {
 	background-color: #4b76bb;
-	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 	text-align: left;
+	display: flex;
+	flex-direction: column;
 
 }
 
 nav ul {
 	margin-left: 70px;
-}
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	}
 
 nav li a {
 	text-decoration: none;
@@ -66,8 +118,30 @@ thead{
 th,
 td {
 	border: 1px solid #dddddd;
-	text-align: left;
 	padding:12px;
+}
+
+td a:hover,
+:visited {
+	color: #1b3b6b;
+	cursor: pointer;
+}
+
+td a {
+	color: #5774b9;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.newprod h2 {
+	color:#1b3b6b
+
+}
+
+.newproducts {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: space-evenly;
 }
 
   .print-button {
@@ -100,7 +174,20 @@ form {
 	/* overflow-y: scroll; */
 }
 
-  label {
+.start-time {
+	padding: 10px;
+}
+
+.duration-length {
+	padding: 10px;
+}
+
+.start {
+	text-align: center;
+}
+
+
+label {
   	font-size: 16px;
   	text-align: left;
 	display: flex;
@@ -108,6 +195,8 @@ form {
 	color: #1b3b6b;
 
   }
+
+
 
   input {
   	padding-top: 10px;
@@ -125,7 +214,7 @@ form {
 	justify-content: center;
 	align-items: center;
   }
-  
+ 
 
   #role-signup {
 	padding-top: 12px;

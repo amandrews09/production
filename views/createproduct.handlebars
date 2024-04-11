@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h2>Welcome</h2>
+      <h2>CREATE NEW PRODUCT</h2>
     </div>
   </div>
 
@@ -11,7 +11,7 @@
 
       <form class="form new-project-form">
         <div class="form-group row">
-          <label for="project-name" class="col-sm-3 col-form-label">Name:</label>
+          <label for="project-name">Product Name:</label>
           <div class="col-sm-9">
             <input class="form-control" type="text" id="project-name" name="project-name" />
           </div>
@@ -19,30 +19,33 @@
 
         <div class="form-group row">
           <div class="col-sm-9 offset-sm-3">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">CREATE</button>
           </div>
         </div>
       </form>
     </div>
 
+
     {{#if products.length}}
     <div class="col-md-6 project-list">
-      <h3>Current Products:</h3>
-
+      <h2 class="newprod">Current Products:</h2>
+      <table>
+      <div class="newproducts">
       {{#each products as |product|}}
-      <div class="row mb-2">
-        <div class="col-md-8">
+      <div class="newprod2">
+        <div>
           <h4><a href="/product/{{product.id}}">{{product.name}}</a></h4>
           <p>{{product.location}}</p>
           <p>{{user.name}}</p>
         </div>
         <div class="col-md-4">
-          <button class="btn btn-sm btn-danger" data-id="{{product.id}}">DELETE</button>
+          <button data-id="{{product.id}}">DELETE</button>
         </div>
       </div>
       {{/each}}
     </div>
     {{/if}}
+  </div>
   </div>
 </div>
 

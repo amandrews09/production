@@ -7,30 +7,30 @@
   <title>Production Tracker</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://use.typekit.net/oaa8vzq.css">
+  <link rel="icon" type="image/x-icon" href="/css/assets/favicon.ico">
 </head>
 
-<body>
   <header>
-    {{!-- <a href="/">
-      <img src="/css/assets/time-tracker-logo.png" alt="time tracker logo" width="30%">
-    </a> --}}
     {{#if logged_in}}
-    <nav>
+    <nav class="topnav">
       <a href="/">
         <img src="/css/assets/time-tracker-icon.png" alt="time tracker logo" width="5%">
       </a>
-      {{!--{{#if logged_in}}
-      <button id="logout">logout</button>
-      {{/if}}--}}
       <ul>
-        {{#if isManager}}
-        <li><a href='/register'>CREATE EMPLOYEE</a></li>
-        <li><a href='/createproduct'>CREATE A PRODUCT</a></li>
-        <li><a href='/data'>DASHBOARD</a></li>
-        {{/if}}
-        {{#if logged_in}}
-        <li><button id="logout">LOGOUT</button></li>
-        {{/if}}
+        <div class="navlistleft">
+          {{#if isManager}}
+          <li><a href='/data'>DASHBOARD</a></li>
+          <li><a href='/register'>CREATE EMPLOYEE</a></li>
+          <li><a href='/createproduct'>CREATE A PRODUCT</a></li>
+        </div>
+        <div class="navlistright">
+          <h3>{{user.name}}</h3>
+          {{/if}}
+          {{#if logged_in}}
+          <li><button id="logout">LOGOUT</button></li>
+          {{/if}}
+        </div>
       </ul>
     </nav>
     {{/if}}
@@ -49,6 +49,6 @@
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src='./js/time.js'></script>
-</body>
+
 
 </html>
