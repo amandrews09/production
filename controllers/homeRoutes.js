@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Product, User } = require('../models');
-const { options } = require('../models/Product');
+const { options } = require('../models/product');
 const withAuth = require('../utils/auth');
 const moment = require('moment');
 

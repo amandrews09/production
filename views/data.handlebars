@@ -1,3 +1,21 @@
+{{!--<h1>{{user.name}}</h1>--}}
+
+{{!-- <p>
+  {{#if isManager}}
+  <a href='/register'>Create Employee</a>
+  <a href='/createproduct'>Product Managment</a>
+  {{/if}}
+</p> --}}
+
+
+{{!--{{#if isManager}}
+<a href='/register'>Create Employee</a>
+<a href='/createproduct'>Create A Product</a>
+<a href='/data'>Dashboard</a>
+
+{{/if}}--}}
+
+
 <table>
   <thead>
     <tr>
@@ -19,25 +37,55 @@
       <td>{{user.name}}</td>
       <td>{{product.comment}}</td>
 
-      <td>
-        <div id="time-controls-{{product.id}}">
-          <button class="start" data-product-id="{{product.id}}">Start</button>
-          <button class="stop" data-product-id="{{product.id}}">Stop</button>
-          <div class="duration" data-product-id="{{product.id}}"></div>
-        </div>
-   
-        <div class="start-time" id="start-time-{{product.id}}">
-          {{#if product.startTime}}
-          Start Time: {{product.startTime}}
-          {{/if}}
-        </div>
-        <div class="stop-time" id="stop-time-{{product.id}}">
-          {{#if product.stopTime}}
-          Stop Time: {{product.stopTime}}
-          {{/if}}
-        </div>
-        <div class="duration-length"id="duration-{{product.id}}"></div>
-      </td>
+
+      {{!--
+    <tr>
+
+      <th>Name</th>
+      <th>Location</th>
+      <th>Technician</th>
+      <th>Comment</th>
+      <th>Tracking</th>
+    </tr> --}}
+
+    {{!-- {{#each products as |product|}}
+
+    <td>
+      <a href='/product/{{product.id}}'>{{product.name}}</a>
+    </td>
+    <td>{{product.location}}</td>
+    <td>{{product.user.name}}</td>
+    <td>
+      {{#each product.comments as |comment|}}
+      <p>{{comment.text}}</p>
+      {{/each}}
+    </td> --}}
+
+    {{!-- Date and Time functionality --}}
+
+    <td>
+      <div id="time-controls-{{product.id}}">
+
+        <button class="start" data-product-id="{{product.id}}">Start</button>
+        <button class="stop" data-product-id="{{product.id}}">Stop</button>
+        <div class="duration" data-product-id="{{product.id}}"></div>
+      </div>
+      <!-- Placeholders for date and start time -->
+      <div class="start-time" id="start-time-{{product.id}}">
+        {{#if product.startTime}}
+        Start Time: {{product.startTime}}
+        {{/if}}
+      </div>
+      <div class="stop-time" id="stop-time-{{product.id}}">
+        {{#if product.stopTime}}
+        Stop Time: {{product.stopTime}}
+        {{/if}}
+      </div>
+      <div class="duration-length" id="duration-{{product.id}}">
+        {{#if product.duration}}
+        Duration: {{product.duration}}
+        {{/if}}
+    </td>
 
     </tr>
     {{/each}}

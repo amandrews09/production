@@ -42,10 +42,9 @@ $(document).on('click', 'button.stop', async function () {
         if (!response.ok) {
             throw new Error('Failed to save stop time.');
         }
-
         // Display stopTime in readable format in UI
         const displayStopTime = moment(stopTime).format('ddd MMM DD YYYY HH:mm:ss');
-
+      
         console.log("Stop time saved for product " + productId);
         $('#stop-time-' + productId).text("Stop Time: " + displayStopTime);
 
