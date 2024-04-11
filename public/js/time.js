@@ -1,10 +1,10 @@
-// Time.js
-
+// Start button functionality
 $(document).on('click', 'button.start', async function () {
     const productId = $(this).data('product-id');
     const startTime = moment().toISOString(); // Use ISO string for consistency with server storage
 
     try {
+        // Update startTime in the database
         const response = await fetch(`/api/products/${productId}`, {
             method: 'PUT',
             body: JSON.stringify({ startTime }),
@@ -24,36 +24,13 @@ $(document).on('click', 'button.start', async function () {
     }
 });
 
-// $(document).on('click', 'button.stop', async function () {
-//     const productId = $(this).data('product-id');
-//     const stopTime = moment().toISOString(); // Use ISO string for consistency
-
-//     try {
-//         const response = await fetch(`/api/products/${productId}`, {
-//             method: 'PUT',
-//             body: JSON.stringify({ stopTime }),
-//             headers: { 'Content-Type': 'application/json' },
-//         });
-
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.message || 'Failed to save stop time.');
-//         }
-
-//         const displayStopTime = moment(stopTime).format('ddd MMM DD YYYY HH:mm:ss');
-//         console.log("Stop time saved for product " + productId);
-//         $('#stop-time-' + productId).text("Stop Time: " + displayStopTime);
-//     } catch (error) {
-//         console.error(error.message);
-//     }
-// });
-
+// Stop button functionality
 $(document).on('click', 'button.stop', async function () {
     const productId = $(this).data('product-id');
-    const stopTime = moment().toISOString(); // Prepare stopTime
+    const stopTime = moment().toISOString(); // Use ISO string for consistency with server storage
 
     try {
-        // First, update stopTime in the database
+        // Update stopTime in the database
         let response = await fetch(`/api/products/${productId}`, {
             method: 'PUT',
             body: JSON.stringify({ stopTime }),
@@ -64,13 +41,13 @@ $(document).on('click', 'button.stop', async function () {
             throw new Error('Failed to save stop time.');
         }
 
-        const displayStopTime = moment(stopTime).format('dddd, MMMM Do YYYY, h:mm:ss a');
+        // Display stopTime in readable format in UI
+        const displayStopTime = moment(stopTime).format('ddd MMM DD YYYY HH:mm:ss');
         console.log("Stop time saved for product " + productId);
         $('#stop-time-' + productId).text("Stop Time: " + displayStopTime);
 
-        // Stop time update was successful; now fetch the product details
+        // Fetch the product details for duration calculation
         response = await fetch(`/api/products/${productId}`);
-
 
         if (!response.ok) {
             throw new Error('Failed to fetch product details.');
@@ -93,8 +70,9 @@ $(document).on('click', 'button.stop', async function () {
     }
 });
 
+// Calculate duration using the fetched startTime and the recently saved stopTime
 function calculateDuration(startTime, stopTime) {
-    // Directly use ISO 8601 strings with Moment.js
+    // Directly use ISO strings with Moment.js
     const startMoment = moment(startTime);
     const stopMoment = moment(stopTime);
 
@@ -108,10 +86,28 @@ function calculateDuration(startTime, stopTime) {
     };
 }
 
-
-function displayDuration(productId, { hours, minutes, seconds }) {
+// Display the duration and send value to the database
+async function displayDuration(productId, { hours, minutes, seconds }) {
     const durationFormatted = `${hours} hours ${minutes} minutes ${seconds} seconds`;
     $('#duration-' + productId).text("Duration: " + durationFormatted);
+
+    try {
+        // Send the duration to the server to be stored in the database
+        const response = await fetch(`/api/products/${productId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ duration: durationFormatted }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update duration.');
+        }
+
+        const data = await response.json();
+        console.log('Duration updated successfully:', data);
+    } catch (error) {
+        console.error('Error updating duration:', error);
+    }
 }
 
 
