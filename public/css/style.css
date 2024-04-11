@@ -239,3 +239,7 @@ label {
 	cursor: pointer;
 	font-family: "davis-sans", sans-serif;
   }
+
+	a {
+		text-decoration: none;
+	}
