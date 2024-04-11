@@ -38,7 +38,8 @@
       <td>{{product.comment}}</td>
 
 
-    {{!-- <tr>
+      {{!--
+    <tr>
 
       <th>Name</th>
       <th>Location</th>
@@ -62,33 +63,29 @@
 
     {{!-- Date and Time functionality --}}
 
-      <td>
-        {{!-- <button class="btn btn-primary time-entry" data-product-id="{{product.id}}">New Time Entry</button> --}}
+    <td>
+      <div id="time-controls-{{product.id}}">
 
-        <div id="time-controls-{{product.id}}">
-          {{!-- <input type="text" class="datepicker" id="datepicker-{{product.id}}" hidden> --}}
-          <button class="start" data-product-id="{{product.id}}">START</button>
-          <button class="stop" data-product-id="{{product.id}}">STOP</button>
-          <div class="duration" data-product-id="{{product.id}}"></div>
-        </div>
-        <!-- Placeholders for date and start time -->
-        {{!-- <div id="selected-date-{{product.id}}">
-          {{#if product.selectedDate}}
-          Selected Date: {{product.selectedDate}}
-          {{/if}}
-        </div> --}}
-        <div class="start-time" id="start-time-{{product.id}}">
-          {{#if product.startTime}}
-          Start Time: {{product.startTime}}
-          {{/if}}
-        </div>
-        <div class="stop-time" id="stop-time-{{product.id}}">
-          {{#if product.stopTime}}
-          Stop Time: {{product.stopTime}}
-          {{/if}}
-        </div>
-        <div class="duration-length" id="duration-{{product.id}}"></div>
-      </td>
+        <button class="start" data-product-id="{{product.id}}">Start</button>
+        <button class="stop" data-product-id="{{product.id}}">Stop</button>
+        <div class="duration" data-product-id="{{product.id}}"></div>
+      </div>
+      <!-- Placeholders for date and start time -->
+      <div id="start-time-{{product.id}}">
+        {{#if product.startTime}}
+        Start Time: {{product.startTime}}
+        {{/if}}
+      </div>
+      <div id="stop-time-{{product.id}}">
+        {{#if product.stopTime}}
+        Stop Time: {{product.stopTime}}
+        {{/if}}
+      </div>
+      <div id="duration-{{product.id}}">
+        {{#if product.duration}}
+        Duration: {{product.duration}}
+        {{/if}}
+    </td>
 
     </tr>
     {{/each}}

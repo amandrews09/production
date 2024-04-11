@@ -41,7 +41,6 @@ router.get('/data', async (req, res) => {
     // const products = await productData.map(Product => Product.get({ plain: true }));
     const products = productData.map(product => {
         const productPlain = product.get({ plain: true });
-        // productPlain.selectedDate = productPlain.selectedDate ? moment(productPlain.selectedDate).format('ddd MMM DD YYYY') : null;
         productPlain.startTime = productPlain.startTime ? moment(productPlain.startTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
         productPlain.stopTime = productPlain.stopTime ? moment(productPlain.stopTime).format('ddd MMM DD YYYY HH:mm:ss') : null;
         return productPlain;
