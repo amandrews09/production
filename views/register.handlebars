@@ -1,27 +1,3 @@
-<header>
-  {{#if logged_in}}
-  <nav class="topnav">
-    <a href="/">
-      <img src="/css/assets/time-tracker-icon.png" alt="time tracker logo" width="5%">
-    </a>
-    <ul>
-      <div class="navlistleft">
-        {{#if isManager}}
-        <li><a href='/data'>DASHBOARD</a></li>
-        <li><a href='/register'>CREATE EMPLOYEE</a></li>
-        <li><a href='/createproduct'>CREATE A PRODUCT</a></li>
-      </div>
-      <div class="navlistright">
-        <h3>{{user.name}}</h3>
-        {{/if}}
-        {{#if logged_in}}
-        <li><button id="logout">LOGOUT</button></li>
-        {{/if}}
-      </div>
-    </ul>
-  </nav>
-  {{/if}}
-</header>
 
 <h2 class='page-title'>REGISTER NEW</h2>
   <form class='form signup-form'>
